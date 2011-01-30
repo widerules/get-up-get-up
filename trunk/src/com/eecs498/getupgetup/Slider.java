@@ -182,7 +182,7 @@ public class Slider extends Activity
 				
 				if(counter<10)
 				{
-					currentview = (int)(4*Math.random()); //DOWN;//views.size() - 1;
+					currentview = (int)(3*Math.random()); //DOWN;//views.size() - 1;
 					counter++;
 				}
 				else
@@ -201,7 +201,11 @@ public class Slider extends Activity
 				
 				if(counter<10)
 				{
-					currentview = (int)(4*Math.random()); //UP; //0;
+					currentview = (int)(3*Math.random()); //UP; //0;
+					if(currentview == 1)
+					{
+						currentview = 3;
+					}
 					counter++;
 				}
 				else
@@ -223,7 +227,11 @@ public class Slider extends Activity
 				
 				if(counter<10)
 				{
-					currentview = (int)(4*Math.random());//LEFT;//views.size() - 1;
+					currentview = (int)(3*Math.random()); //UP; //0;
+					if(currentview == 0)
+					{
+						currentview = 3;
+					}
 					counter++;
 				}
 				else
@@ -241,7 +249,11 @@ public class Slider extends Activity
 				
 				if(counter<10)
 				{
-					currentview = (int)(4*Math.random()); //RIGHT; //0;
+					currentview = (int)(3*Math.random()); //UP; //0;
+					if(currentview == 2)
+					{
+						currentview = 3;
+					}
 					counter++;
 				}
 				else
