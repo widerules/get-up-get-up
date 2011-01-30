@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent">
+	<DigitalClock android:id="@+id/AnalogClock01"
+	android:layout_height="fill_parent"  
+	android:layout_width="fill_parent"
+	android:textSize="30pt"
+	android:textColor="#FFFFFF"
+	android:typeface="monospace"
+	android:orientation="horizontal"
+	android:gravity="fill" />
+</LinearLayout>
