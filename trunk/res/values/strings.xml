@@ -25,5 +25,11 @@
         INTEGER);</string>
     <string
         name="drop_schedules_db">DROP TABLE IF EXISTS schedules</string>
-
+	<string 
+		name="app_info_drag">\n\nCurrent Mode: SCROLL\n\nDrag the view using finger.\nLong press to change the mode to SWIPE.\nDouble tap to reposition the view to normal.</string>
+    <string 
+    	name="app_name2">Get Up! Get Up!</string>
+	<string 
+		name="app_info_flip">\n\nCurrent Mode: FLIP\n\nSwipe left, right, up, down to change the views\nLong press to change to mode to SCROLL</string>
+	
 </resources>
