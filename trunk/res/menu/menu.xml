@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/addSchedule"
+          android:icon="@drawable/icon"
+          android:title="@string/add_schedule" />
+    <item android:id="@+id/nightClock"
+          android:icon="@drawable/icon"
+          android:title="@string/show_night_clock" />
+    <item android:id="@+id/playGame"
+          android:icon="@drawable/icon"
+          android:title="@string/play_game" />      
+</menu>

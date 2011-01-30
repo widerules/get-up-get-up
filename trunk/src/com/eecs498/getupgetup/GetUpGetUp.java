@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -85,10 +86,12 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
 
     private static final int ACTIVITY_CREATE_SCHEDULE = 0;
     private static final int ACTIVITY_SHOW_NIGHT_CLOCK = 1;
-
-    private static final int ADD_SCHEDULE_ID = Menu.FIRST;
+    private static final int ACTIVITY_PLAY_GAME = 2;
+    
+   /** private static final int ADD_SCHEDULE_ID = Menu.FIRST;
     private static final int SHOW_NIGHT_CLOCK_ID = Menu.FIRST + 1;
-
+    private static final int PLAY_GAME_ID = Menu.FIRST + 2;*/
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,12 +115,39 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    /**
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         menu.add(0, ADD_SCHEDULE_ID, 0, R.string.add_schedule);
         menu.add(0, SHOW_NIGHT_CLOCK_ID, 0, R.string.show_night_clock);
+        menu.add(0, PLAY_GAME_ID, 0, R.string.play_game);
         return true;
-    }
+    }*/
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.addSchedule:
+        	createSchedule();
+            return true;
+        case R.id.nightClock:
+            displayNightClock();
+            return true;
+        case R.id.playGame:
+        	playGame();
+            return true; 
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+    
+    /**
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch (item.getItemId()) {
@@ -125,18 +155,31 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
                 createSchedule();
                 return true;
             case SHOW_NIGHT_CLOCK_ID:
-                // displayNightClock();
+                displayNightClock();
+                return true;
+            case PLAY_GAME_ID:
+                //playGame();
                 return true;
         }
         return super.onMenuItemSelected(featureId, item);
-    }
-
+    }*/
+    
     private void createSchedule() {
         Uri uri = Schedules.addSchedule(getContentResolver());
         String segment = uri.getPathSegments().get(1);
         int newId = Integer.parseInt(segment);
         Intent intent = new Intent(this, SetSchedule.class);
         intent.putExtra(Schedules.SCHEDULE_ID, newId);
+        startActivity(intent);
+    }
+    
+    private void displayNightClock() {
+        Intent intent = new Intent(this, NightClock.class);
+        startActivity(intent);
+    }
+    
+    private void playGame() {
+        Intent intent = new Intent(this, Slider.class);
         startActivity(intent);
     }
 
@@ -147,3 +190,4 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
     }
 
 }
+

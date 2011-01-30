@@ -23,7 +23,11 @@
 
         <activity
             android:name=".SetSchedule"></activity>
-
+        <activity
+            android:name=".NightClock"></activity>
+        <activity
+            android:name=".Slider"></activity>
+            
     </application>
     <uses-sdk
         android:minSdkVersion="8" />
