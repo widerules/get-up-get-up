@@ -84,11 +84,11 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
         }
     }
 
-    private static final int ACTIVITY_CREATE_SCHEDULE = 0;
+    /** private static final int ACTIVITY_CREATE_SCHEDULE = 0;
     private static final int ACTIVITY_SHOW_NIGHT_CLOCK = 1;
     private static final int ACTIVITY_PLAY_GAME = 2;
     
-   /** private static final int ADD_SCHEDULE_ID = Menu.FIRST;
+	private static final int ADD_SCHEDULE_ID = Menu.FIRST;
     private static final int SHOW_NIGHT_CLOCK_ID = Menu.FIRST + 1;
     private static final int PLAY_GAME_ID = Menu.FIRST + 2;*/
     
