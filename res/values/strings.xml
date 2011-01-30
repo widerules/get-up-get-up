@@ -7,7 +7,9 @@
     <string
         name="add_schedule">Add Schedule</string>
     <string
-        name="show_night_clock">Show Night Clock</string>
+        name="play_game">Play Game</string>
+    <string
+        name="show_night_clock">Night Clock</string>
     <string
         name="no_schedules">Uh-oh, no schedules. You should make one.</string>
     <string
