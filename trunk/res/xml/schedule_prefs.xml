@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/set_schedule">
+        <EditTextPreference
+            android:defaultValue="" 
+            android:title="@string/label"
+            android:key="schedule_label"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, GetUpGetUp!</string>
-    <string name="app_name">Get Up, Get Up</string>
+    <string
+        name="hello">Hello World, GetUpGetUp!</string>
+    <string
+        name="app_name">Get Up, Get Up</string>
+    <string
+        name="add_schedule">Add Schedule</string>
+    <string
+        name="show_night_clock">Show Night Clock</string>
+    <string
+        name="no_schedules">Uh-oh, no schedules. You should make one.</string>
+    <string
+        name="set_schedule">Set Schedule</string>
+    <string
+        name="dates_and_times">Dates and Times</string>
+    <string
+        name="label">Label</string>
+
+    <!-- Schedules databse SQL commands -->
+    <string
+        name="create_schedules_db">CREATE TABLE schedules (_id INTEGER PRIMARY KEY, label TEXT,
+        enabled INTEGER, monday INTEGER, " + "tuesday INTEGER, wednesday
+        INTEGER, thursday INTEGER, friday INTEGER, saturday INTEGER, sunday
+        INTEGER);</string>
+    <string
+        name="drop_schedules_db">DROP TABLE IF EXISTS schedules</string>
+
 </resources>
