@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="5dip"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <!-- A layout that displays the name of the schedule with the days and times 
+        below the label -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip">
+
+        <TextView
+            android:id="@+id/schedule_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/days_and_times"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/ltgrey" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/schedule_enable_button"
+        android:focusable="false"
+        android:layout_width="60dip"
+        android:layout_height="76dip"
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>
