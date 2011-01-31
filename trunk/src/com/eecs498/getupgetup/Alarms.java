@@ -56,6 +56,14 @@ public class Alarms {
                         Alarm.Columns.SCHEDULE_ID + "=?", selectionArgs, null);
     }
 
+    public static Cursor getEnabledScheduleAlarmsCursor(
+                    ContentResolver contentResolver, int schedule_id) {
+        String selectionArgs[] = { Integer.toString(schedule_id) };
+        return contentResolver.query(Alarm.Columns.CONTENT_URI,
+                        Alarm.Columns.ALARM_QUERY_COLUMNS,
+                        "enabled =1 AND schedule_id = ?", selectionArgs, null);
+    }
+
     // Private method to get a more limited set of alarms from the database.
     private static Cursor getFilteredAlarmsCursor(
                     ContentResolver contentResolver) {
