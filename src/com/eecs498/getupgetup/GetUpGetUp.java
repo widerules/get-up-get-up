@@ -1,6 +1,10 @@
 package com.eecs498.getupgetup;
 
+import java.util.Calendar;
+
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -119,15 +123,6 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
-    /**
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        menu.add(0, ADD_SCHEDULE_ID, 0, R.string.add_schedule);
-        menu.add(0, SHOW_NIGHT_CLOCK_ID, 0, R.string.show_night_clock);
-        menu.add(0, PLAY_GAME_ID, 0, R.string.play_game);
-        return true;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -147,29 +142,18 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
         }
     }
     
-    /**
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch (item.getItemId()) {
-            case ADD_SCHEDULE_ID:
-                createSchedule();
-                return true;
-            case SHOW_NIGHT_CLOCK_ID:
-                displayNightClock();
-                return true;
-            case PLAY_GAME_ID:
-                //playGame();
-                return true;
-        }
-        return super.onMenuItemSelected(featureId, item);
-    }*/
-    
     private void createSchedule() {
         Uri uri = Schedules.addSchedule(getContentResolver());
         String segment = uri.getPathSegments().get(1);
         int newId = Integer.parseInt(segment);
         Intent intent = new Intent(this, SetSchedule.class);
         intent.putExtra(Schedules.SCHEDULE_ID, newId);
+        
+        Intent alrm_intent = new Intent(this, alarmReceiver.class); 
+        AlarmManager alm=(AlarmManager)getSystemService(ALARM_SERVICE); 
+        PendingIntent alrm_pending=PendingIntent.getBroadcast(this,0 , alrm_intent, 0);                         
+        alm.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+30000 ,alrm_pending); 
+        
         startActivity(intent);
     }
     
