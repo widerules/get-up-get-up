@@ -3,6 +3,10 @@ package com.eecs498.getupgetup;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -19,6 +23,8 @@ public class Slider extends Activity
 	final private int SWIPE_MIN_DISTANCE = 100;
 	final private int SWIPE_MIN_VELOCITY = 100;
 	
+	private Uri ringtoneUri = null;
+	private Ringtone rt = null;
 	private ViewFlipper flipper = null;
 	private ArrayList<ImageView> views = null;
 	private GestureDetector gesturedetector = null;
@@ -50,6 +56,10 @@ public class Slider extends Activity
 	private int currentview = 0;//(int)(4*Math.random());
 	private int counter = 0;
 	
+	//private RingtoneManager rm = new RingtoneManager(getApplicationContext());
+
+	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +68,13 @@ public class Slider extends Activity
         gesturedetector = new GestureDetector(this, this);
         //vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
         gesturedetector.setOnDoubleTapListener(this);
-        
+    	ringtoneUri = android.provider.Settings.System.DEFAULT_RINGTONE_URI;
+    	rt = RingtoneManager.getRingtone(getApplicationContext(),ringtoneUri);
+		rt.play();
         flipper.setInAnimation(animleftin);
         flipper.setOutAnimation(animleftout);
         flipper.setFlipInterval(3000);
         flipper.setAnimateFirstView(true);
-
         prepareAnimations();
         prepareViews();
         addViews();
@@ -173,7 +184,7 @@ public class Slider extends Activity
 		final float ydiff = Math.abs(ev1y - ev2y);
 		final float xvelocity = Math.abs(velocityX);
 		final float yvelocity = Math.abs(velocityY);
-		
+				
 		if(xvelocity > this.SWIPE_MIN_VELOCITY && xdiff > this.SWIPE_MIN_DISTANCE)
 		{
 			if((ev1x > ev2x)&&(currentview == LEFT)) //Swipe Left
@@ -266,6 +277,12 @@ public class Slider extends Activity
 				flipper.setDisplayedChild(currentview);
 			}
 			
+		}
+		
+		if(currentview == FIN){
+			rt.stop();
+			Intent intent = new Intent(this,GetUpGetUp.class);
+			startActivity(intent);
 		}
 				
 		return false;
