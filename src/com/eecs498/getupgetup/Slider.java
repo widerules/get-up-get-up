@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -52,12 +55,19 @@ public class Slider extends Activity
 	private int counter = 0;
 	
 	//private RingtoneManager rm = new RingtoneManager(getApplicationContext());
-
+	private Uri ringtoneUri = null;
+	private Ringtone rt = null;
 	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+     	ringtoneUri = android.provider.Settings.System.DEFAULT_RINGTONE_URI;
+    	rt = RingtoneManager.getRingtone(this, ringtoneUri);
+    	if(!Globals.justPlay && !rt.isPlaying()){
+     		rt.play();
+    	}
         
         flipper = new ViewFlipper(this);
         gesturedetector = new GestureDetector(this, this);
@@ -272,8 +282,8 @@ public class Slider extends Activity
 		}
 		
 		if(currentview == FIN){
-			if(Globals.rt.isPlaying()){
-				Globals.rt.stop();
+			if(!Globals.justPlay && rt.isPlaying()){
+				rt.stop();
 			}
 			Intent intent = new Intent(this,GetUpGetUp.class);
 			startActivity(intent);
