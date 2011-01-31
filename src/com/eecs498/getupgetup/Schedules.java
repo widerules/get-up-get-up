@@ -83,11 +83,25 @@ public class Schedules {
         return sched;
     }
 
-    public static void setSchedule(Context context, int id, String label,
-                    int monday, int tuesday, int wednesday, int thursday,
-                    int friday, int saturday, int sunday) {
-        ContentValues values = new ContentValues(9);
+    public static void setSchedule(Context context, int id, String label, boolean enabled,
+                    long monday, long tuesday, long wednesday, long thursday,
+                    long friday, long saturday, long sunday) {
+        ContentValues values = new ContentValues(10);
         ContentResolver resolver = context.getContentResolver();
+        
+        values.put(Schedule.Columns.LABEL, label);
+        values.put(Schedule.Columns.ENABLED, enabled ? 1 : 0);
+        values.put(Schedule.Columns.MONDAY, monday);
+        values.put(Schedule.Columns.TUESDAY, tuesday);
+        values.put(Schedule.Columns.WEDNESDAY, wednesday);
+        values.put(Schedule.Columns.THURSDAY, thursday);
+        values.put(Schedule.Columns.FRIDAY, friday);
+        values.put(Schedule.Columns.SATURDAY, saturday);
+        values.put(Schedule.Columns.SUNDAY, sunday);
+        
+        resolver.update(ContentUris.withAppendedId(Schedule.Columns.CONTENT_URI, id), values, null, null);
+        
+        // TODO set the next alarm
         
     }
 
