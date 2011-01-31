@@ -62,12 +62,6 @@ public class DaysAndTimes extends Activity implements OnItemClickListener {
                 }
             });
         }
-
-        private long getAlarmTime(int alarm_time_id) {
-            TextView alarm_time = (TextView) findViewById(alarm_time_id);
-            // TODO convert alarm_time to a long
-            return 1;
-        }
     }
 
     @Override

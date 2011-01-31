@@ -40,9 +40,22 @@ public class Schedule {
         // p.writeInt(silent ? 1 : 0);
     }
 
-    public String toString(Context context, boolean showNever) {
-        // TODO
-        return "M 7:30a Tu 8:00a W 10:15a Th 12:00p F 6:45a";
+    public String toString(Context context, int schedule_id) {
+        Cursor c =
+                        Alarms.getScheduleAlarmsCursor(
+                                        context.getContentResolver(),
+                                        schedule_id);
+        Alarm alarm;
+        c.moveToFirst();
+        String ret = new String();
+        
+        do {
+            alarm = new Alarm(c);
+            ret += (alarm.day_text.charAt(0) == 'T') ? ("" + alarm.day_text.charAt(0) + alarm.day_text.charAt(1)) : ("" + alarm.day_text.charAt(0));
+            ret += " " + alarm.hour + ":" + (alarm.minutes < 10 ? ("0" + alarm.minutes)
+                            : alarm.minutes) + " ";
+        } while (c.moveToNext());
+        return ret;
     }
 
     public static class Columns implements BaseColumns {
