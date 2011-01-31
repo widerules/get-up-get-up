@@ -5,14 +5,14 @@
     <string
         name="app_name">Get Up, Get Up</string>
     <string
-        name="app_nap">Get Up, Get Up				(Nap)</string>
+        name="app_nap">Get Up, Get Up (Nap)</string>
     <string
         name="add_schedule">Add Schedule</string>
     <string
         name="play_game">Play Game</string>
     <string
         name="show_night_clock">Night Clock</string>
-	<string
+    <string
         name="quick_nap">Quick Nap</string>
     <string
         name="no_schedules">Uh-oh, no schedules. You should make one.</string>
@@ -23,6 +23,39 @@
     <string
         name="label">Label</string>
 
+    <!-- Days of the week -->
+    <string
+        name="monday">Monday</string>
+    <string
+        name="tuesday">Tuesday</string>
+    <string
+        name="wednesday">Wednesday</string>
+    <string
+        name="thursday">Thursday</string>
+    <string
+        name="friday">Friday</string>
+    <string
+        name="saturday">Saturday</string>
+    <string
+        name="sunday">Sunday</string>
+
+    <!-- Repeat options that appear under an alarm on main Alarm Clock screen to 
+        identify repetition schedule: concatenate days with this character, i.e. "Mon, Tue, 
+        Wed" -->
+    <string
+        name="day_concat">", "</string>
+
+    <!-- Repeat options that appear under an alarm on main Alarm Clock screen to 
+        identify repetition schedule: special case for when the alarm is set to repeat every 
+        day -->
+    <string
+        name="every_day">every day</string>
+
+    <!-- Repeat options that appear under an alarm on main Alarm Clock screen to 
+        identify repetition schedule: special case for when the alarm is set to never repeat -->
+    <string
+        name="never">Never</string>
+
     <!-- Schedules databse SQL commands -->
     <string
         name="create_schedules_db">CREATE TABLE schedules (_id INTEGER PRIMARY KEY, label TEXT,
@@ -31,11 +64,16 @@
         INTEGER);</string>
     <string
         name="drop_schedules_db">DROP TABLE IF EXISTS schedules</string>
-	<string 
-		name="app_info_drag">\n\nCurrent Mode: SCROLL\n\nDrag the view using finger.\nLong press to change the mode to SWIPE.\nDouble tap to reposition the view to normal.</string>
-    <string 
-    	name="app_name2">Get Up! Get Up!</string>
-	<string 
-		name="app_info_flip">\n\nCurrent Mode: FLIP\n\nSwipe left, right, up, down to change the views\nLong press to change to mode to SCROLL</string>
-	
+    <string
+        name="app_info_drag">\n\nCurrent Mode: SCROLL\n\nDrag the view using finger.\nLong press
+        to change the mode to SWIPE.\nDouble tap to reposition the view to
+        normal.</string>
+    <string
+        name="app_name2">Get Up! Get Up!</string>
+    <string
+        name="app_info_flip">\n\nCurrent Mode: FLIP\n\nSwipe left, right, up, down to change the
+        views\nLong press to change to mode to SCROLL</string>
+
+
+
 </resources>

@@ -24,12 +24,15 @@
         <activity
             android:name=".SetSchedule"></activity>
         <activity
+            android:name=".DaysAndTimes"></activity>
+        <activity
             android:name=".NightClock"></activity>
         <activity
             android:name=".Slider"></activity>
-            
-        <receiver android:name="alarmReceiver" android:process=":remote"/>
-        
+
+        <receiver
+            android:name="alarmReceiver"
+            android:process=":remote" />
     </application>
     <uses-sdk
         android:minSdkVersion="8" />
