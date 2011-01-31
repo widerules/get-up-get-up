@@ -1,7 +1,5 @@
 package com.eecs498.getupgetup;
 
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -18,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
@@ -137,6 +136,9 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
         case R.id.playGame:
         	playGame();
             return true; 
+        case R.id.quickNap:
+        	quickNap();
+            return true; 
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -147,13 +149,7 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
         String segment = uri.getPathSegments().get(1);
         int newId = Integer.parseInt(segment);
         Intent intent = new Intent(this, SetSchedule.class);
-        intent.putExtra(Schedules.SCHEDULE_ID, newId);
-        
-        Intent alrm_intent = new Intent(this, alarmReceiver.class); 
-        AlarmManager alm=(AlarmManager)getSystemService(ALARM_SERVICE); 
-        PendingIntent alrm_pending=PendingIntent.getBroadcast(this,0 , alrm_intent, 0);                         
-        alm.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+10000 ,alrm_pending); 
-        
+        intent.putExtra(Schedules.SCHEDULE_ID, newId);  
         startActivity(intent);
     }
     
@@ -163,9 +159,15 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
     }
     
     private void playGame() {
-    	Globals.justPlay = true;
         Intent intent = new Intent(this, Slider.class);
         startActivity(intent);
+    }
+    
+    private void quickNap() {
+        Intent alrm_intent = new Intent(this, alarmReceiver.class); 
+        AlarmManager alm=(AlarmManager)getSystemService(ALARM_SERVICE); 
+        PendingIntent alrm_pending=PendingIntent.getBroadcast(this, 0 , alrm_intent, 0);                         
+        alm.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+10000 ,alrm_pending);
     }
 
     public void onItemClick(AdapterView parent, View v, int pos, long id) {
