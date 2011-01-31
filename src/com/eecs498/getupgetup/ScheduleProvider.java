@@ -18,13 +18,16 @@ public class ScheduleProvider extends ContentProvider {
 
     private static final int SCHEDULES = 1;
     private static final int SCHEDULES_ID = 2;
+    private static final int ALARMS = 3;
+    private static final int ALARMS_ID = 4;
+
     private static final UriMatcher sURIMatcher = new UriMatcher(
                     UriMatcher.NO_MATCH);
-
     static {
         sURIMatcher.addURI("com.eecs498.getupgetup", "schedule", SCHEDULES);
-        sURIMatcher.addURI("com.eecs498.getupgetup", "schedule/#",
-                        SCHEDULES_ID);
+        sURIMatcher.addURI("com.eecs498.getupgetup", "schedule/#", SCHEDULES_ID);
+        sURIMatcher.addURI("com.eecs498.getupgetup", "alarm", ALARMS);
+        sURIMatcher.addURI("com.eecs498.getupgetup", "alarm/#", ALARMS_ID);
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -42,11 +45,18 @@ public class ScheduleProvider extends ContentProvider {
                             + "tuesday INTEGER, wednesday INTEGER, "
                             + "thursday INTEGER, friday INTEGER, "
                             + "saturday INTEGER, sunday INTEGER);");
+
+            db.execSQL("CREATE TABLE alarms (_id INTEGER PRIMARY KEY,"
+                            + "schedule_id INTEGER, " + "day_text TEXT, "
+                            + "hour INTEGER, " + "minutes INTEGER, "
+                            + "daysofweek INTEGER, "
+                            + "alarmtime INTEGER, enabled INTEGER);");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS schedules");
+            db.execSQL("DROP TABLE IF EXISTS alarms");
             onCreate(db);
         }
     }
@@ -73,6 +83,13 @@ public class ScheduleProvider extends ContentProvider {
                 qb.appendWhere("_id=");
                 qb.appendWhere(uri.getPathSegments().get(1));
                 break;
+            case ALARMS:
+                qb.setTables("alarms");
+                break;
+            case ALARMS_ID:
+                qb.setTables("alarms");
+                qb.appendWhere("_id=");
+                qb.appendWhere(uri.getPathSegments().get(1));
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
@@ -96,6 +113,10 @@ public class ScheduleProvider extends ContentProvider {
                 return "vnd.android.cursor.dir/schedules";
             case SCHEDULES_ID:
                 return "vnd.android.cursor.item/schedules";
+            case ALARMS:
+                return "vnd.android.cursor.dir/alarms";
+            case ALARMS_ID:
+                return "vnd.android.cursor.item/alarms";
             default:
                 throw new IllegalArgumentException("Unknown URL");
         }
@@ -109,11 +130,18 @@ public class ScheduleProvider extends ContentProvider {
         int match = sURIMatcher.match(uri);
         SQLiteDatabase db = mOpenHandler.getWritableDatabase();
         switch (match) {
-            case SCHEDULES_ID:
+            case SCHEDULES_ID: {
                 String segment = uri.getPathSegments().get(1);
                 rowId = Long.parseLong(segment);
                 count = db.update("schedules", values, "_id=" + rowId, null);
                 break;
+            }
+            case ALARMS_ID: {
+                String segment = uri.getPathSegments().get(1);
+                rowId = Long.parseLong(segment);
+                count = db.update("alarms", values, "_id=" + rowId, null);
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Cannot update URL: "
                                 + uri);
@@ -124,52 +152,95 @@ public class ScheduleProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues initialValues) {
-        if (sURIMatcher.match(uri) != SCHEDULES)
-            throw new IllegalArgumentException("Cannot insert into URL: " + uri);
+        switch (sURIMatcher.match(uri)) {
+            case SCHEDULES: {
+                ContentValues values;
+                if (initialValues != null)
+                    values = new ContentValues(initialValues);
+                else
+                    values = new ContentValues();
 
-        ContentValues values;
-        if (initialValues != null)
-            values = new ContentValues(initialValues);
-        else
-            values = new ContentValues();
+                if (!values.containsKey(Schedule.Columns.LABEL))
+                    values.put(Schedule.Columns.LABEL, "");
 
-        if (!values.containsKey(Schedule.Columns.LABEL))
-            values.put(Schedule.Columns.LABEL, "");
+                if (!values.containsKey(Schedule.Columns.ENABLED))
+                    values.put(Schedule.Columns.ENABLED, 0);
 
-        if (!values.containsKey(Schedule.Columns.ENABLED))
-            values.put(Schedule.Columns.ENABLED, 0);
+                if (!values.containsKey(Schedule.Columns.MONDAY))
+                    values.put(Schedule.Columns.MONDAY, -1);
 
-        if (!values.containsKey(Schedule.Columns.MONDAY))
-            values.put(Schedule.Columns.MONDAY, -1);
+                if (!values.containsKey(Schedule.Columns.TUESDAY))
+                    values.put(Schedule.Columns.TUESDAY, -1);
 
-        if (!values.containsKey(Schedule.Columns.TUESDAY))
-            values.put(Schedule.Columns.TUESDAY, -1);
+                if (!values.containsKey(Schedule.Columns.WEDNESDAY))
+                    values.put(Schedule.Columns.WEDNESDAY, -1);
 
-        if (!values.containsKey(Schedule.Columns.WEDNESDAY))
-            values.put(Schedule.Columns.WEDNESDAY, -1);
+                if (!values.containsKey(Schedule.Columns.THURSDAY))
+                    values.put(Schedule.Columns.THURSDAY, -1);
 
-        if (!values.containsKey(Schedule.Columns.THURSDAY))
-            values.put(Schedule.Columns.THURSDAY, -1);
+                if (!values.containsKey(Schedule.Columns.FRIDAY))
+                    values.put(Schedule.Columns.FRIDAY, -1);
 
-        if (!values.containsKey(Schedule.Columns.FRIDAY))
-            values.put(Schedule.Columns.FRIDAY, -1);
+                if (!values.containsKey(Schedule.Columns.SATURDAY))
+                    values.put(Schedule.Columns.SATURDAY, -1);
 
-        if (!values.containsKey(Schedule.Columns.SATURDAY))
-            values.put(Schedule.Columns.SATURDAY, -1);
+                if (!values.containsKey(Schedule.Columns.SUNDAY))
+                    values.put(Schedule.Columns.SUNDAY, -1);
 
-        if (!values.containsKey(Schedule.Columns.SUNDAY))
-            values.put(Schedule.Columns.SUNDAY, -1);
+                SQLiteDatabase db = mOpenHandler.getWritableDatabase();
+                long rowId =
+                                db.insert("schedules", Schedule.Columns.LABEL,
+                                                values);
+                if (rowId < 0)
+                    throw new SQLException("Failed to insert row into " + uri);
 
-        SQLiteDatabase db = mOpenHandler.getWritableDatabase();
-        long rowId = db.insert("schedules", Schedule.Columns.LABEL, values);
-        if (rowId < 0)
-            throw new SQLException("Failed to insert row into " + uri);
+                Uri newUri =
+                                ContentUris.withAppendedId(
+                                                Schedule.Columns.CONTENT_URI,
+                                                rowId);
+                getContext().getContentResolver().notifyChange(newUri, null);
+                return newUri;
+            }
+            case ALARMS: {
+                ContentValues values;
+                if (initialValues != null)
+                    values = new ContentValues(initialValues);
+                else
+                    values = new ContentValues();
 
-        Uri newUri =
-                        ContentUris.withAppendedId(
-                                        Schedule.Columns.CONTENT_URI, rowId);
-        getContext().getContentResolver().notifyChange(newUri, null);
-        return newUri;
+                if (!values.containsKey(Alarm.Columns.HOUR))
+                    values.put(Alarm.Columns.HOUR, 0);
+
+                if (!values.containsKey(Alarm.Columns.MINUTES))
+                    values.put(Alarm.Columns.MINUTES, 0);
+
+                if (!values.containsKey(Alarm.Columns.DAYS_OF_WEEK))
+                    values.put(Alarm.Columns.DAYS_OF_WEEK, 0);
+
+                if (!values.containsKey(Alarm.Columns.ALARM_TIME))
+                    values.put(Alarm.Columns.ALARM_TIME, 0);
+
+                if (!values.containsKey(Alarm.Columns.ENABLED))
+                    values.put(Alarm.Columns.ENABLED, 0);
+
+                SQLiteDatabase db = mOpenHandler.getWritableDatabase();
+                long rowId = db.insert("alarms", null, values);
+                if (rowId < 0) {
+                    throw new SQLException("Failed to insert row into " + uri);
+                }
+
+                Uri newUrl =
+                                ContentUris.withAppendedId(
+                                                Alarm.Columns.CONTENT_URI,
+                                                rowId);
+                getContext().getContentResolver().notifyChange(newUrl, null);
+                return newUrl;
+            }
+            default:
+                throw new IllegalArgumentException("Cannot insert into URL: "
+                                + uri);
+        }
+
     }
 
     @Override
@@ -181,7 +252,7 @@ public class ScheduleProvider extends ContentProvider {
             case SCHEDULES:
                 count = db.delete("schedules", where, whereArgs);
                 break;
-            case SCHEDULES_ID:
+            case SCHEDULES_ID: {
                 String segment = uri.getPathSegments().get(1);
                 rowId = Long.parseLong(segment);
                 if (TextUtils.isEmpty(where)) {
@@ -191,6 +262,22 @@ public class ScheduleProvider extends ContentProvider {
                     where = "_id=" + segment + " AND (" + where + ")";
                 }
                 count = db.delete("schedules", where, whereArgs);
+                break;
+            }
+            case ALARMS:
+                count = db.delete("alarms", where, whereArgs);
+                break;
+            case ALARMS_ID: {
+                String segment = uri.getPathSegments().get(1);
+                rowId = Long.parseLong(segment);
+                if (TextUtils.isEmpty(where)) {
+                    where = "_id=" + segment;
+                }
+                else {
+                    where = "_id=" + segment + " AND (" + where + ")";
+                }
+                count = db.delete("alarms", where, whereArgs);
+            }
                 break;
             default:
                 throw new IllegalArgumentException("Cannot delete from URL: "
