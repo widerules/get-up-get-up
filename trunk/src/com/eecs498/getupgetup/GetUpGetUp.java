@@ -152,7 +152,7 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
         Intent alrm_intent = new Intent(this, alarmReceiver.class); 
         AlarmManager alm=(AlarmManager)getSystemService(ALARM_SERVICE); 
         PendingIntent alrm_pending=PendingIntent.getBroadcast(this,0 , alrm_intent, 0);                         
-        alm.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+30000 ,alrm_pending); 
+        alm.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+10000 ,alrm_pending); 
         
         startActivity(intent);
     }
@@ -163,6 +163,7 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
     }
     
     private void playGame() {
+    	Globals.justPlay = true;
         Intent intent = new Intent(this, Slider.class);
         startActivity(intent);
     }
