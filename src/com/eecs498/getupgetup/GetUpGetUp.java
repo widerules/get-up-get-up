@@ -73,9 +73,8 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
             // The schedule days and times get set
             TextView days_and_times_view =
                             (TextView) view.findViewById(R.id.days_and_times);
-            final String days_and_times_str =
-                            schedule.toString(GetUpGetUp.this, false);
-            schedule.toString(GetUpGetUp.this, false);
+            final String days_and_times_str = 
+                            schedule.toString(GetUpGetUp.this, schedule.id);
             if (days_and_times_str != null && days_and_times_str.length() != 0) {
                 days_and_times_view.setText(days_and_times_str);
                 days_and_times_view.setVisibility(View.VISIBLE);

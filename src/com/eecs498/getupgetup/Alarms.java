@@ -19,7 +19,8 @@ public class Alarms {
     /**
      * Creates a new Alarm.
      */
-    public static Uri addAlarm(ContentResolver contentResolver, int schedule_id, String day_text) {
+    public static Uri addAlarm(ContentResolver contentResolver,
+                    int schedule_id, String day_text) {
         ContentValues values = new ContentValues();
         values.put(Alarm.Columns.SCHEDULE_ID, schedule_id);
         values.put(Alarm.Columns.DAY_TEXT, day_text);
@@ -45,6 +46,14 @@ public class Alarms {
         return contentResolver.query(Alarm.Columns.CONTENT_URI,
                         Alarm.Columns.ALARM_QUERY_COLUMNS, null, null,
                         Alarm.Columns.DEFAULT_SORT_ORDER);
+    }
+
+    public static Cursor getScheduleAlarmsCursor(
+                    ContentResolver contentResolver, int schedule_id) {
+        String selectionArgs[] = { Integer.toString(schedule_id) };
+        return contentResolver.query(Alarm.Columns.CONTENT_URI,
+                        Alarm.Columns.ALARM_QUERY_COLUMNS,
+                        Alarm.Columns.SCHEDULE_ID + "=?", selectionArgs, null);
     }
 
     // Private method to get a more limited set of alarms from the database.
