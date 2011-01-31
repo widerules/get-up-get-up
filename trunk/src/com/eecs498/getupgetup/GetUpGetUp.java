@@ -146,9 +146,11 @@ public class GetUpGetUp extends Activity implements OnItemClickListener {
     
     private void createSchedule() {
         Uri uri = Schedules.addSchedule(getContentResolver());
+        
         String segment = uri.getPathSegments().get(1);
         int newId = Integer.parseInt(segment);
         Intent intent = new Intent(this, SetSchedule.class);
+        Alarms.addAlarms(getContentResolver(), newId);
         intent.putExtra(Schedules.SCHEDULE_ID, newId);  
         startActivity(intent);
     }
