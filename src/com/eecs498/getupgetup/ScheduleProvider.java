@@ -90,6 +90,7 @@ public class ScheduleProvider extends ContentProvider {
                 qb.setTables("alarms");
                 qb.appendWhere("_id=");
                 qb.appendWhere(uri.getPathSegments().get(1));
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }

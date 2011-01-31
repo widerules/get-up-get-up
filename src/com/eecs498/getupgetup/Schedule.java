@@ -42,13 +42,17 @@ public class Schedule {
 
     public String toString(Context context, int schedule_id) {
         Cursor c =
-                        Alarms.getScheduleAlarmsCursor(
+                        Alarms.getEnabledScheduleAlarmsCursor(
                                         context.getContentResolver(),
                                         schedule_id);
-        Alarm alarm;
-        c.moveToFirst();
+
         String ret = new String();
+        if (!c.moveToFirst())
+            return ret;
         
+        Alarm alarm;
+        
+        c.moveToFirst();
         do {
             alarm = new Alarm(c);
             ret += (alarm.day_text.charAt(0) == 'T') ? ("" + alarm.day_text.charAt(0) + alarm.day_text.charAt(1)) : ("" + alarm.day_text.charAt(0));
