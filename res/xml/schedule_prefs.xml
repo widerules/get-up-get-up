@@ -3,9 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         android:title="@string/set_schedule">
+        <PreferenceScreen
+            android:key="schedule_days_and_times_screen"
+            android:title="Days and Times">
+            </PreferenceScreen>
+        <!-- <PreferenceScreen android:key="schedule_days_and_times_screen" android:title="Days 
+            and Times" android:summary="Set alarm days and times"> <CheckBoxPreference android:key="monday" 
+            android:defaultValue="false" android:summary="7:30 am" android:persistent="false" 
+            android:title="@string/monday" /> <Preference android:key="tuesday" android:persistent="false" 
+            android:title="@string/tuesday" /> <Preference android:key="wednesday" android:persistent="false" 
+            android:title="@string/wednesday" /> <Preference android:key="thursday" android:persistent="false" 
+            android:title="@string/thursday" /> <Preference android:key="friday" android:persistent="false" 
+            android:title="@string/friday" /> <Preference android:key="saturday" android:persistent="false" 
+            android:title="@string/saturday" /> <Preference android:key="sunday" android:persistent="false" 
+            android:title="@string/sunday" /> </PreferenceScreen> -->
+
         <EditTextPreference
-            android:defaultValue="" 
+            android:defaultValue=""
             android:title="@string/label"
-            android:key="schedule_label"/>
+            android:key="schedule_label" />
     </PreferenceCategory>
 </PreferenceScreen>
