@@ -5,11 +5,15 @@
     <string
         name="app_name">Get Up, Get Up</string>
     <string
+        name="app_nap">Get Up, Get Up				(Nap)</string>
+    <string
         name="add_schedule">Add Schedule</string>
     <string
         name="play_game">Play Game</string>
     <string
         name="show_night_clock">Night Clock</string>
+	<string
+        name="quick_nap">Quick Nap</string>
     <string
         name="no_schedules">Uh-oh, no schedules. You should make one.</string>
     <string

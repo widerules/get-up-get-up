@@ -65,7 +65,7 @@ public class Slider extends Activity
         
      	ringtoneUri = android.provider.Settings.System.DEFAULT_RINGTONE_URI;
     	rt = RingtoneManager.getRingtone(this, ringtoneUri);
-    	if(!Globals.justPlay && !rt.isPlaying()){
+    	if(!rt.isPlaying()){
      		rt.play();
     	}
         
@@ -282,7 +282,7 @@ public class Slider extends Activity
 		}
 		
 		if(currentview == FIN){
-			if(!Globals.justPlay && rt.isPlaying()){
+			if(rt.isPlaying()){
 				rt.stop();
 			}
 			Intent intent = new Intent(this,GetUpGetUp.class);

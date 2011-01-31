@@ -8,5 +8,8 @@
           android:title="@string/show_night_clock" />
     <item android:id="@+id/playGame"
           android:icon="@drawable/play"
-          android:title="@string/play_game" />      
+          android:title="@string/play_game" />
+    <item android:id="@+id/quickNap"
+          android:icon="@drawable/zzz"
+          android:title="@string/quick_nap" />      
 </menu>
